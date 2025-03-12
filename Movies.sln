@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies", "Movies\Movies.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.DataAccess", "Movies.DataAccess\Movies.DataAccess.csproj", "{DE96029F-B2B4-46EE-AFEA-4F46766693F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Shared", "Movies.Shared\Movies.Shared.csproj", "{2916A17B-8CDB-44F1-BC90-05F1E2B503D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DE96029F-B2B4-46EE-AFEA-4F46766693F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE96029F-B2B4-46EE-AFEA-4F46766693F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE96029F-B2B4-46EE-AFEA-4F46766693F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2916A17B-8CDB-44F1-BC90-05F1E2B503D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2916A17B-8CDB-44F1-BC90-05F1E2B503D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2916A17B-8CDB-44F1-BC90-05F1E2B503D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2916A17B-8CDB-44F1-BC90-05F1E2B503D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

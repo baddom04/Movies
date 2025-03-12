@@ -1,4 +1,5 @@
 ﻿using Movies.DataAccess.Models;
+using Movies.Shared.DTO;
 
 namespace Movies.DataAccess.Services.Interfaces
 {

@@ -1,9 +1,4 @@
 ﻿using Movies.DataAccess.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Movies.DataAccess.Services.Interfaces
 {
@@ -18,5 +13,4 @@ namespace Movies.DataAccess.Services.Interfaces
         // Retrieves the list of favorite content for a user.
         Task<IEnumerable<Content>> GetFavoritesForUserAsync(int userId);
     }
-
 }

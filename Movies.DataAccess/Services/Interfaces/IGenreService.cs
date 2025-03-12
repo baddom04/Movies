@@ -13,5 +13,4 @@ namespace Movies.DataAccess.Services.Interfaces
         // Retrieves all content associated with a given genre.
         Task<IEnumerable<Content>> GetContentsByGenreAsync(int genreId);
     }
-
 }
