@@ -1,0 +1,16 @@
+﻿namespace Movies.DataAccess.Models
+{
+    public class QuizVote
+    {
+        public int Id { get; set; }
+        public int QuizSessionId { get; set; }
+        public int UserId { get; set; }
+        public int ContentId { get; set; }             // Az a film/sorozat, amire szavaztak
+        public bool Vote { get; set; }                 // true: szívesen megnézné, false: nem
+        public DateTime VotedAt { get; set; }
+
+        public QuizSession QuizSession { get; set; } = null!;
+        public User User { get; set; } = null!;
+        public Content Content { get; set; } = null!;
+    }
+}
