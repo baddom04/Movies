@@ -7,7 +7,6 @@
         public required string Email { get; set; }              // Egyedi email cím
         public required string PasswordHash { get; set; }         // Jelszó hash-elve
         public DateTime RegistrationDate { get; set; }
-        public required string ProfilePictureUrl { get; set; }    // Profilkép elérési útja
         public string? Bio { get; set; }                  // Rövid bemutatkozás (opcionális)
 
         // Navigációs tulajdonságok
