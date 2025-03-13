@@ -5,7 +5,7 @@ namespace Movies.DataAccess.Services.Interfaces
     public interface IGroupQuizParticipantService
     {
         // Adds a user as a participant in a quiz group.
-        Task<GroupQuizParticipant> AddParticipantAsync(int groupQuizId, int userId);
+        Task<GroupQuizParticipant> AddParticipantAsync(int groupQuizId, string userId);
 
         // Removes a participant from a quiz group.
         Task RemoveParticipantAsync(int participantId);

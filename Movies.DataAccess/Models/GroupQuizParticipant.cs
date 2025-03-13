@@ -7,6 +7,7 @@
         public required string UserId { get; set; }
         public DateTime JoinedAt { get; set; }
 
+        // Navigation properties
         public virtual GroupQuiz GroupQuiz { get; set; } = null!;
         public virtual User User { get; set; } = null!;
     }

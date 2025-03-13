@@ -1,4 +1,4 @@
-﻿namespace Movies.DataAccess.Models.Enums
+﻿namespace Movies.Shared.Enums
 {
     public enum ContentType
     {

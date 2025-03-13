@@ -1,6 +1,6 @@
 ﻿using Movies.DataAccess.Models;
-using Movies.DataAccess.Models.Enums;
 using Movies.Shared.DTO;
+using Movies.Shared.Enums;
 
 namespace Movies.DataAccess.Services.Interfaces
 {
@@ -27,5 +27,4 @@ namespace Movies.DataAccess.Services.Interfaces
         // Retrieves statistical data for a piece of content (e.g., average rating, total ratings, etc.).
         Task<ContentStatisticsDto> GetContentStatisticsAsync(int contentId);
     }
-
 }

@@ -1,11 +1,12 @@
 ﻿using Movies.DataAccess.Models;
+using Movies.Shared.DTO;
 
 namespace Movies.DataAccess.Services.Interfaces
 {
     public interface IQuizSessionService
     {
         // Creates a new quiz session for a quiz group.
-        Task<QuizSession> CreateQuizSessionAsync(QuizSession quizSession);
+        Task<QuizSession> CreateQuizSessionAsync(CreateQuizSessionDto quizSession);
 
         // Retrieves a quiz session by its ID.
         Task<QuizSession> GetQuizSessionByIdAsync(int quizSessionId);
