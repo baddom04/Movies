@@ -2,11 +2,11 @@
 {
     public class WatchlistItem
     {
-        public int UserId { get; set; }
+        public required string UserId { get; set; }
         public int ContentId { get; set; }
         public DateTime AddedAt { get; set; }           // Mikor lett hozzáadva a listához
 
-        public User User { get; set; } = null!;
-        public Content Content { get; set; } = null!;
+        public virtual User User { get; set; } = null!;
+        public virtual Content Content { get; set; } = null!;
     }
 }

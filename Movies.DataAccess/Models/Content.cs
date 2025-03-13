@@ -14,10 +14,10 @@ namespace Movies.DataAccess.Models
         public ContentType Type { get; set; }          // Film vagy Sorozat
 
         // Navigációs tulajdonságok
-        public ICollection<Rating> Ratings { get; set; } = [];
-        public ICollection<Comment> Comments { get; set; } = [];
-        public required ICollection<ContentGenre> ContentGenres { get; set; }
-        public ICollection<Favorite> FavoritedBy { get; set; } = [];
-        public ICollection<WatchlistItem> InWatchlists { get; set; } = [];
+        public virtual ICollection<Rating> Ratings { get; set; } = [];
+        public virtual ICollection<Comment> Comments { get; set; } = [];
+        public virtual required ICollection<ContentGenre> ContentGenres { get; set; }
+        public virtual ICollection<Favorite> FavoritedBy { get; set; } = [];
+        public virtual ICollection<WatchlistItem> InWatchlists { get; set; } = [];
     }
 }

@@ -2,7 +2,7 @@
 {
     public enum ContentType
     {
-        Film,
+        Movie,
         Series
     }
 }

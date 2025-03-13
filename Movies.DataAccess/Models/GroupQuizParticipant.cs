@@ -4,10 +4,10 @@
     {
         public int Id { get; set; }
         public int GroupQuizId { get; set; }
-        public int UserId { get; set; }
+        public required string UserId { get; set; }
         public DateTime JoinedAt { get; set; }
 
-        public GroupQuiz GroupQuiz { get; set; } = null!;
-        public User User { get; set; } = null!;
+        public virtual GroupQuiz GroupQuiz { get; set; } = null!;
+        public virtual User User { get; set; } = null!;
     }
 }

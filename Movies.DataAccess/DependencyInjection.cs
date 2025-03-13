@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Movies.DataAccess
 {
-    internal static class DependencyInjection
+    public static class DependencyInjection
     {
         public static IServiceCollection AddDataAccess(this IServiceCollection services, IConfiguration config)
         {

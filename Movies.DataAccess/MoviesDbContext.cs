@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Movies.DataAccess.Models;
 
 namespace Movies.DataAccess
 {
-    public class MoviesDbContext(DbContextOptions<MoviesDbContext> options) : DbContext(options)
+    public class MoviesDbContext(DbContextOptions<MoviesDbContext> options) : IdentityDbContext<User>(options)
     {
-        // Users and Profile-related data
-        public DbSet<User> Users { get; set; }
+        // Profile-related data
         public DbSet<Favorite> Favorites { get; set; }
         public DbSet<WatchlistItem> WatchlistItems { get; set; }
 
@@ -65,6 +65,19 @@ namespace Movies.DataAccess
                 .HasOne(qv => qv.QuizSession)
                 .WithMany(qs => qs.QuizVotes)
                 .HasForeignKey(qv => qv.QuizSessionId);
+
+            // User configuration: Restricting cascade deletion of GroupQuizParticipants, otherwise
+            // that would create multiple cascade paths to GQP
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.GroupQuizParticipants)
+                .WithOne(gqp => gqp.User)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Same config with GroupQuizVotes
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.GroupQuizVotes)
+                .WithOne(gqp => gqp.User)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

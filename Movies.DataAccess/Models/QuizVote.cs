@@ -4,13 +4,13 @@
     {
         public int Id { get; set; }
         public int QuizSessionId { get; set; }
-        public int UserId { get; set; }
+        public required string UserId { get; set; }
         public int ContentId { get; set; }             // Az a film/sorozat, amire szavaztak
         public bool Vote { get; set; }                 // true: szívesen megnézné, false: nem
         public DateTime VotedAt { get; set; }
 
-        public QuizSession QuizSession { get; set; } = null!;
-        public User User { get; set; } = null!;
-        public Content Content { get; set; } = null!;
+        public virtual QuizSession QuizSession { get; set; } = null!;
+        public virtual User User { get; set; } = null!;
+        public virtual Content Content { get; set; } = null!;
     }
 }

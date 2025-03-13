@@ -1,4 +1,6 @@
-﻿namespace Movies.Shared.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Movies.Shared.DTO
 {
     public class UserRegistrationDto
     {
@@ -11,7 +13,8 @@
         // Plain-text password; this will be hashed before saving to the database
         public required string Password { get; init; }
 
-        // Optionally, might include other fields such as a confirm password property
-        // public string ConfirmPassword { get; set; }
+        // Confirm password property
+        [Compare("Password")]
+        public required string ConfirmPassword { get; set; }
     }
 }
