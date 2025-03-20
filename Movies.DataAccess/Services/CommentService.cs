@@ -27,6 +27,12 @@ namespace Movies.DataAccess.Services
             return newComment;
         }
 
+        public async Task<Comment> GetCommentByIdAsync(int commentId)
+        {
+            return await _context.Comments.FindAsync(commentId) 
+                ?? throw new EntityNotFoundException();
+        }
+
         public async Task<IEnumerable<Comment>> GetCommentsForContentAsync(int contentId)
         {
             return await _context.Comments

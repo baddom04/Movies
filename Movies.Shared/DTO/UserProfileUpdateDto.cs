@@ -8,9 +8,6 @@
         // Updated email address
         public string? Email { get; init; }
 
-        // Updated profile picture URL (if available)
-        public string? ProfilePictureUrl { get; init; }
-
         // Updated bio or description
         public string? Bio { get; init; }
     }

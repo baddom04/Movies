@@ -53,5 +53,11 @@ namespace Movies.DataAccess.Services
             _context.QuizVotes.Remove(vote);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<QuizVote> GetQuizVoteByIdAsync(int voteId)
+        {
+            return await _context.QuizVotes.FindAsync(voteId) 
+                ?? throw new EntityNotFoundException();
+        }
     }
 }

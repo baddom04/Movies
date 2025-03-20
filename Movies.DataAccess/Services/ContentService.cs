@@ -26,7 +26,7 @@ namespace Movies.DataAccess.Services
             return await _context.Contents.ToListAsync();
         }
 
-        public async Task<IEnumerable<Content>> SearchContentsAsync(string search, int? releaseYear, ContentType? type, int? genreId)
+        public async Task<IEnumerable<Content>> SearchContentsAsync(string? search, int? releaseYear, ContentType? type, int? genreId)
         {
             IQueryable<Content> query = _context.Contents.AsQueryable();
 

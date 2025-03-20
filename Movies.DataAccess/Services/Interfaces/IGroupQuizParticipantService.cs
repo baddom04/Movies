@@ -12,5 +12,8 @@ namespace Movies.DataAccess.Services.Interfaces
 
         // Retrieves all participants in a specific quiz group.
         Task<IEnumerable<GroupQuizParticipant>> GetParticipantsByGroupQuizAsync(int groupQuizId);
+
+        //Retrieves a single qroupquizparticipant by its Id.
+        Task<GroupQuizParticipant> GetGroupQuizParticipantByIdAsync(int participantId);
     }
 }

@@ -40,5 +40,11 @@ namespace Movies.DataAccess.Services
                 .Include(p => p.User)
                 .ToListAsync();
         }
+
+        public async Task<GroupQuizParticipant> GetGroupQuizParticipantByIdAsync(int participantId)
+        {
+            return await _context.GroupQuizParticipants.FindAsync(participantId) 
+                ?? throw new EntityNotFoundException();
+        }
     }
 }

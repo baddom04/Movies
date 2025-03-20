@@ -31,6 +31,12 @@ namespace Movies.DataAccess.Services
             return ratings.Average(r => r.Value);
         }
 
+        public async Task<Rating> GetRatingByIdAsync(int ratingId)
+        {
+            return await _context.Ratings.FindAsync(ratingId) 
+                ?? throw new EntityNotFoundException();
+        }
+
         public async Task<IEnumerable<Rating>> GetRatingsForContentAsync(int contentId)
         {
             return await _context.Ratings

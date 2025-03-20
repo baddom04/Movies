@@ -7,7 +7,7 @@ namespace Movies.DataAccess.Services.Interfaces
     {
         // Creates a new quiz group.
         Task<GroupQuiz> CreateGroupQuizAsync(CreateGroupQuizDto groupQuiz);
-
+    
         // Retrieves a quiz group by its ID.
         Task<GroupQuiz> GetGroupQuizByIdAsync(int groupQuizId);
 

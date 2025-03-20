@@ -16,5 +16,8 @@ namespace Movies.DataAccess.Services.Interfaces
 
         // Deletes a vote (if necessary, e.g., for vote retraction).
         Task DeleteQuizVoteAsync(int voteId);
+
+        // Retrieves a single QuizVote by its Id.
+        Task<QuizVote> GetQuizVoteByIdAsync(int voteId);
     }
 }

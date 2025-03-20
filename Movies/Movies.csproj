@@ -20,8 +20,4 @@
     <ProjectReference Include="..\Movies.DataAccess\Movies.DataAccess.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

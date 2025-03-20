@@ -18,5 +18,8 @@ namespace Movies.DataAccess.Services.Interfaces
 
         // Deletes a rating.
         Task DeleteRatingAsync(int ratingId);
+
+        //Retrieves a single rating by Id.
+        Task<Rating> GetRatingByIdAsync(int ratingId);
     }
 }

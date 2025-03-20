@@ -13,7 +13,7 @@ namespace Movies.DataAccess.Services.Interfaces
         Task<IEnumerable<Content>> GetAllContentsAsync();
 
         // Searches content based on title, release year, type, or genre.
-        Task<IEnumerable<Content>> SearchContentsAsync(string title, int? releaseYear, ContentType? type, int? genreId);
+        Task<IEnumerable<Content>> SearchContentsAsync(string? title, int? releaseYear, ContentType? type, int? genreId);
 
         // Creates a new content record.
         Task<Content> CreateContentAsync(Content content);

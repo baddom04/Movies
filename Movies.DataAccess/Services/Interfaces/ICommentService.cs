@@ -1,6 +1,5 @@
 ﻿using Movies.DataAccess.Models;
 using Movies.Shared.DTO;
-using Movies.Shared.DTO.ModelDTOs;
 
 namespace Movies.DataAccess.Services.Interfaces
 {
@@ -17,5 +16,8 @@ namespace Movies.DataAccess.Services.Interfaces
 
         // Performs a soft-delete on a comment (e.g., sets Text = "[deleted]" and marks as deleted).
         Task SoftDeleteCommentAsync(int commentId);
+
+        //Retrieves a single comment by its Id;
+        Task<Comment> GetCommentByIdAsync(int commentId);
     }
 }
