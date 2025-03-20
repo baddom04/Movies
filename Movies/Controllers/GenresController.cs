@@ -6,6 +6,10 @@ using Movies.Shared.DTO.ModelDTOs;
 
 namespace Movies.Controllers
 {
+    /// <summary>
+    /// Provides endpoints for genre management including retrieving all genres,
+    /// retrieving a specific genre by ID, and fetching all content items associated with a genre.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class GenresController(IGenreService genreService, IMapper mapper) : ControllerBase
@@ -15,8 +19,8 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Retrieves all genres.
-        /// GET: /api/genres
         /// </summary>
+        /// <returns>An IActionResult containing an IEnumerable of GenreDto objects.</returns>
         [HttpGet]
         public async Task<IActionResult> GetAllGenres()
         {
@@ -27,8 +31,9 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Retrieves details for a specific genre by its ID.
-        /// GET: /api/genres/{genreId}
         /// </summary>
+        /// <param name="genreId">The unique identifier of the genre to retrieve.</param>
+        /// <returns>An IActionResult containing the GenreDto if found, or a NotFound result if not found.</returns>
         [HttpGet("{genreId:int}")]
         public async Task<IActionResult> GetGenreById(int genreId)
         {
@@ -46,8 +51,9 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Retrieves all content items associated with a specific genre.
-        /// GET: /api/genres/{genreId}/contents
         /// </summary>
+        /// <param name="genreId">The unique identifier of the genre for which to retrieve content items.</param>
+        /// <returns>An IActionResult containing an IEnumerable of ContentDto objects.</returns>
         [HttpGet("{genreId:int}/contents")]
         public async Task<IActionResult> GetContentsByGenre(int genreId)
         {

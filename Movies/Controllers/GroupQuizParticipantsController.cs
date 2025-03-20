@@ -7,6 +7,10 @@ using Movies.Shared.DTO.ModelDTOs;
 
 namespace Movies.Controllers
 {
+    /// <summary>
+    /// Handles operations for group quiz participants including adding a participant to a quiz group,
+    /// retrieving all participants for a specific quiz group, retrieving a participant by ID, and removing a participant.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class GroupQuizParticipantsController(IGroupQuizParticipantService participantService, IMapper mapper) : ControllerBase
@@ -16,8 +20,9 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Adds a user as a participant to a quiz group.
-        /// POST: /api/groupquizparticipants
         /// </summary>
+        /// <param name="dto">The AddParticipantDto containing the GroupQuizId and the UserId to add as a participant.</param>
+        /// <returns>A CreatedAtAction response containing the created participant as a GroupQuizParticipantDto.</returns>
         [HttpPost]
         public async Task<IActionResult> AddParticipant([FromBody] AddParticipantDto dto)
         {
@@ -31,9 +36,10 @@ namespace Movies.Controllers
         }
 
         /// <summary>
-        /// (Optional) Retrieves a participant by their ID.
-        /// GET: /api/groupquizparticipants/{participantId}
+        /// Retrieves a participant by their ID.
         /// </summary>
+        /// <param name="participantId">The unique identifier of the participant.</param>
+        /// <returns>An IActionResult containing the GroupQuizParticipantDto if found; otherwise, a NotFound result.</returns>
         [HttpGet("{participantId:int}")]
         public async Task<IActionResult> GetParticipantById(int participantId)
         {
@@ -41,7 +47,6 @@ namespace Movies.Controllers
             {
                 var participant = await _participantService.GetGroupQuizParticipantByIdAsync(participantId);
                 var participantDto = _mapper.Map<GroupQuizParticipantDto>(participant);
-
                 return Ok(participantDto);
             }
             catch (EntityNotFoundException ex)
@@ -52,8 +57,9 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Retrieves all participants in a specific quiz group.
-        /// GET: /api/groupquizparticipants/groupquiz/{groupQuizId}
         /// </summary>
+        /// <param name="groupQuizId">The unique identifier of the quiz group.</param>
+        /// <returns>An IActionResult containing an IEnumerable of GroupQuizParticipantDto objects.</returns>
         [HttpGet("groupquiz/{groupQuizId:int}")]
         public async Task<IActionResult> GetParticipantsByGroupQuiz(int groupQuizId)
         {
@@ -64,8 +70,9 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Removes a participant from a quiz group.
-        /// DELETE: /api/groupquizparticipants/{participantId}
         /// </summary>
+        /// <param name="participantId">The unique identifier of the participant to remove.</param>
+        /// <returns>An IActionResult with NoContent on successful removal, or NotFound if the participant is not found.</returns>
         [HttpDelete("{participantId:int}")]
         public async Task<IActionResult> RemoveParticipant(int participantId)
         {

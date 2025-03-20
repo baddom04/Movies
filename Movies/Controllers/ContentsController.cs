@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Movies.DataAccess.Exceptions;
 using Movies.DataAccess.Models;
 using Movies.DataAccess.Services.Interfaces;
 using Movies.Shared.DTO.ModelDTOs;
@@ -7,6 +8,11 @@ using Movies.Shared.Enums;
 
 namespace Movies.Controllers
 {
+    /// <summary>
+    /// Manages content operations (films/series), including retrieving all content items,
+    /// retrieving a specific content item by ID, creating new content, updating existing content,
+    /// deleting content, searching content, and retrieving content statistics.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ContentsController(IContentService contentService, IMapper mapper) : ControllerBase
@@ -16,8 +22,8 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Retrieve all content items (films/series).
-        /// GET: /api/contents
         /// </summary>
+        /// <returns>An IActionResult containing an IEnumerable of ContentDto objects.</returns>
         [HttpGet]
         public async Task<IActionResult> GetAllContents()
         {
@@ -28,8 +34,9 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Retrieve details for a specific content item by its ID.
-        /// GET: /api/contents/{contentId}
         /// </summary>
+        /// <param name="contentId">The unique identifier of the content item.</param>
+        /// <returns>An IActionResult containing the ContentDto if found; otherwise, a NotFound result.</returns>
         [HttpGet("{contentId:int}")]
         public async Task<IActionResult> GetContentById(int contentId)
         {
@@ -39,7 +46,7 @@ namespace Movies.Controllers
                 var contentDto = _mapper.Map<ContentDto>(content);
                 return Ok(contentDto);
             }
-            catch (KeyNotFoundException ex)
+            catch (EntityNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }
@@ -47,8 +54,9 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Create a new content item.
-        /// POST: /api/contents
         /// </summary>
+        /// <param name="contentDto">The ContentDto object containing the details of the new content.</param>
+        /// <returns>An IActionResult containing the created ContentDto with a 201 Created status.</returns>
         [HttpPost]
         public async Task<IActionResult> CreateContent([FromBody] ContentDto contentDto)
         {
@@ -69,8 +77,10 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Update an existing content item.
-        /// PUT: /api/contents/{contentId}
         /// </summary>
+        /// <param name="contentId">The unique identifier of the content item to update.</param>
+        /// <param name="contentDto">The ContentDto object containing updated details.</param>
+        /// <returns>An IActionResult with NoContent on success; otherwise, a BadRequest or NotFound result.</returns>
         [HttpPut("{contentId:int}")]
         public async Task<IActionResult> UpdateContent(int contentId, [FromBody] ContentDto contentDto)
         {
@@ -90,7 +100,7 @@ namespace Movies.Controllers
                 await _contentService.UpdateContentAsync(contentEntity);
                 return NoContent();
             }
-            catch (KeyNotFoundException ex)
+            catch (EntityNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }
@@ -98,8 +108,9 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Delete a content item.
-        /// DELETE: /api/contents/{contentId}
         /// </summary>
+        /// <param name="contentId">The unique identifier of the content item to delete.</param>
+        /// <returns>An IActionResult with NoContent on success; otherwise, a NotFound result.</returns>
         [HttpDelete("{contentId:int}")]
         public async Task<IActionResult> DeleteContent(int contentId)
         {
@@ -108,7 +119,7 @@ namespace Movies.Controllers
                 await _contentService.DeleteContentAsync(contentId);
                 return NoContent();
             }
-            catch (KeyNotFoundException ex)
+            catch (EntityNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }
@@ -116,8 +127,12 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Search content by query parameters (e.g., title, releaseYear, type, genreId).
-        /// GET: /api/contents/search?title=...&releaseYear=...&type=...&genreId=...
         /// </summary>
+        /// <param name="title">Optional title keyword to search for.</param>
+        /// <param name="releaseYear">Optional release year filter.</param>
+        /// <param name="type">Optional content type filter (e.g., film or series).</param>
+        /// <param name="genreId">Optional genre ID filter.</param>
+        /// <returns>An IActionResult containing an IEnumerable of ContentDto objects matching the search criteria.</returns>
         [HttpGet("search")]
         public async Task<IActionResult> SearchContent(
             [FromQuery] string? title,
@@ -132,8 +147,9 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Get statistical data (average rating, total ratings, total comments) for a content item.
-        /// GET: /api/contents/{contentId}/statistics
         /// </summary>
+        /// <param name="contentId">The unique identifier of the content item.</param>
+        /// <returns>An IActionResult containing the statistics, or a NotFound result if the content is not found.</returns>
         [HttpGet("{contentId:int}/statistics")]
         public async Task<IActionResult> GetContentStatistics(int contentId)
         {
@@ -142,7 +158,7 @@ namespace Movies.Controllers
                 var stats = await _contentService.GetContentStatisticsAsync(contentId);
                 return Ok(stats); // stats might already be a DTO or you map it if needed
             }
-            catch (KeyNotFoundException ex)
+            catch (EntityNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }

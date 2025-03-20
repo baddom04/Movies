@@ -1,12 +1,16 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Movies.DataAccess.Exceptions;
 using Movies.DataAccess.Models;
 using Movies.DataAccess.Services.Interfaces;
 using Movies.Shared.DTO.ModelDTOs;
 
 namespace Movies.Controllers
 {
+    /// <summary>
+    /// Provides endpoints for managing ratings, including adding, updating, and deleting ratings,
+    /// as well as retrieving all ratings for a specific content item and computing average ratings.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class RatingsController(IRatingService ratingService, IMapper mapper) : ControllerBase
@@ -15,9 +19,10 @@ namespace Movies.Controllers
         private readonly IMapper _mapper = mapper;
 
         /// <summary>
-        /// Add a rating (body includes userId, contentId, rating value).
-        /// POST: /api/ratings
+        /// Adds a new rating.
         /// </summary>
+        /// <param name="ratingDto">A RatingDto containing the user ID, content ID, and rating value.</param>
+        /// <returns>A CreatedAtAction result with the newly created RatingDto.</returns>
         [HttpPost]
         public async Task<IActionResult> AddRating([FromBody] RatingDto ratingDto)
         {
@@ -38,9 +43,10 @@ namespace Movies.Controllers
         }
 
         /// <summary>
-        /// (Optional) Retrieve a single rating by ID if you want a direct fetch endpoint.
-        /// GET: /api/ratings/{ratingId}
+        /// Retrieves a single rating by its ID.
         /// </summary>
+        /// <param name="ratingId">The unique identifier of the rating to retrieve.</param>
+        /// <returns>An Ok result containing the RatingDto if found; otherwise, NotFound.</returns>
         [HttpGet("{ratingId:int}")]
         public async Task<IActionResult> GetRatingById(int ratingId)
         {
@@ -53,9 +59,11 @@ namespace Movies.Controllers
         }
 
         /// <summary>
-        /// Update an existing rating.
-        /// PUT: /api/ratings/{ratingId}
+        /// Updates an existing rating.
         /// </summary>
+        /// <param name="ratingId">The unique identifier of the rating to update.</param>
+        /// <param name="ratingDto">A RatingDto containing the updated rating information.</param>
+        /// <returns>A NoContent result on success, or NotFound if the rating is not found.</returns>
         [HttpPut("{ratingId:int}")]
         public async Task<IActionResult> UpdateRating(int ratingId, [FromBody] RatingDto ratingDto)
         {
@@ -81,9 +89,10 @@ namespace Movies.Controllers
         }
 
         /// <summary>
-        /// Delete a rating.
-        /// DELETE: /api/ratings/{ratingId}
+        /// Deletes a rating.
         /// </summary>
+        /// <param name="ratingId">The unique identifier of the rating to delete.</param>
+        /// <returns>A NoContent result on successful deletion, or NotFound if the rating is not found.</returns>
         [HttpDelete("{ratingId:int}")]
         public async Task<IActionResult> DeleteRating(int ratingId)
         {
@@ -97,10 +106,12 @@ namespace Movies.Controllers
                 return NotFound(ex.Message);
             }
         }
+
         /// <summary>
-        /// Retrieve all ratings for specific content.
-        /// GET: /api/ratings/content/{contentId}
+        /// Retrieves all ratings for a specific content item.
         /// </summary>
+        /// <param name="contentId">The unique identifier of the content item for which to retrieve ratings.</param>
+        /// <returns>An Ok result containing an IEnumerable of RatingDto objects.</returns>
         [HttpGet("content/{contentId:int}")]
         public async Task<IActionResult> GetRatingsForContent(int contentId)
         {
@@ -110,9 +121,10 @@ namespace Movies.Controllers
         }
 
         /// <summary>
-        /// Calculate and return the average rating for specific content.
-        /// GET: /api/ratings/content/{contentId}/average
+        /// Calculates and returns the average rating for a specific content item.
         /// </summary>
+        /// <param name="contentId">The unique identifier of the content item for which to calculate the average rating.</param>
+        /// <returns>An Ok result containing the average rating.</returns>
         [HttpGet("content/{contentId:int}/average")]
         public async Task<IActionResult> GetAverageRatingForContent(int contentId)
         {

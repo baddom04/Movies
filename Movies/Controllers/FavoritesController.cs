@@ -6,6 +6,10 @@ using Movies.Shared.DTO.ModelDTOs;
 
 namespace Movies.Controllers
 {
+    /// <summary>
+    /// Manages user favorites by providing endpoints to add a content item as a favorite,
+    /// retrieve all favorite content items for a user, and remove a content item from the favorites.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class FavoritesController(IFavoriteService favoriteService, IMapper mapper) : ControllerBase
@@ -15,9 +19,9 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Add a new favorite.
-        /// POST: /api/favorites
-        /// Body: { "userId": "userId", "contentId": 123 }
         /// </summary>
+        /// <param name="favoriteDto">The DTO containing the user ID and content ID to add as a favorite.</param>
+        /// <returns>A success message if the favorite is added successfully.</returns>
         [HttpPost]
         public async Task<IActionResult> AddFavorite([FromBody] FavoriteDto favoriteDto)
         {
@@ -37,21 +41,23 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Retrieve all favorites for a specific user.
-        /// GET: /api/favorites/{userId}
         /// </summary>
+        /// <param name="userId">The ID of the user whose favorites are to be retrieved.</param>
+        /// <returns>An IEnumerable of ContentDto objects representing the user's favorite content items.</returns>
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetFavoritesForUser(string userId)
         {
             var favoriteContents = await _favoriteService.GetFavoritesForUserAsync(userId);
-            // Map the list of Content entities to ContentDto objects.
             var favoriteContentDtos = _mapper.Map<IEnumerable<ContentDto>>(favoriteContents);
             return Ok(favoriteContentDtos);
         }
 
         /// <summary>
         /// Remove a favorite.
-        /// DELETE: /api/favorites/{userId}/{contentId}
         /// </summary>
+        /// <param name="userId">The ID of the user whose favorite is to be removed.</param>
+        /// <param name="contentId">The ID of the content item to remove from the user's favorites.</param>
+        /// <returns>A NoContent result if deletion is successful; otherwise, a NotFound result if the favorite does not exist.</returns>
         [HttpDelete("{userId}/{contentId}")]
         public async Task<IActionResult> RemoveFavorite(string userId, int contentId)
         {

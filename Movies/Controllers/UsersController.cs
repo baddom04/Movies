@@ -1,5 +1,9 @@
 ﻿namespace Movies.Controllers
 {
+    /// <summary>
+    /// Handles user management operations including user registration, login, profile retrieval,
+    /// profile update, and listing all users.
+    /// </summary>
     //[Route("api/[controller]")]
     //[ApiController]
     //public class UsersController(IUserService userService, IMapper mapper) : ControllerBase

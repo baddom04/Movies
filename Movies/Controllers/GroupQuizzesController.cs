@@ -7,6 +7,10 @@ using Movies.Shared.DTO.ModelDTOs;
 
 namespace Movies.Controllers
 {
+    /// <summary>
+    /// Manages group quiz operations including creating a new quiz group, retrieving a group quiz by ID,
+    /// retrieving all quiz groups a user participates in, and deleting a quiz group.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class GroupQuizzesController(IGroupQuizService groupQuizService, IMapper mapper) : ControllerBase
@@ -16,8 +20,9 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Creates a new quiz group.
-        /// POST: /api/groupquizzes
         /// </summary>
+        /// <param name="groupQuizDto">A CreateGroupQuizDto containing the details required to create the quiz group.</param>
+        /// <returns>A CreatedAtAction result containing the created GroupQuizDto.</returns>
         [HttpPost]
         public async Task<IActionResult> CreateGroupQuiz([FromBody] CreateGroupQuizDto groupQuizDto)
         {
@@ -31,8 +36,9 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Retrieves a quiz group by its ID.
-        /// GET: /api/groupquizzes/{groupQuizId}
         /// </summary>
+        /// <param name="groupQuizId">The unique identifier of the quiz group.</param>
+        /// <returns>An IActionResult containing the GroupQuizDto if found; otherwise, a NotFound result.</returns>
         [HttpGet("{groupQuizId:int}")]
         public async Task<IActionResult> GetGroupQuizById(int groupQuizId)
         {
@@ -50,8 +56,9 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Retrieves all quiz groups for a user.
-        /// GET: /api/groupquizzes/user/{userId}
         /// </summary>
+        /// <param name="userId">The unique identifier of the user whose quiz groups are to be retrieved.</param>
+        /// <returns>An IActionResult containing an IEnumerable of GroupQuizDto objects.</returns>
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetGroupQuizzesForUser(string userId)
         {
@@ -62,8 +69,9 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Deletes a quiz group.
-        /// DELETE: /api/groupquizzes/{groupQuizId}
         /// </summary>
+        /// <param name="groupQuizId">The unique identifier of the quiz group to delete.</param>
+        /// <returns>An IActionResult with NoContent if deletion is successful; otherwise, NotFound if the group quiz does not exist.</returns>
         [HttpDelete("{groupQuizId:int}")]
         public async Task<IActionResult> DeleteGroupQuiz(int groupQuizId)
         {

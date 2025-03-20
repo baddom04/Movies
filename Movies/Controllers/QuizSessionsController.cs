@@ -7,6 +7,10 @@ using Movies.Shared.DTO.ModelDTOs;
 
 namespace Movies.Controllers
 {
+    /// <summary>
+    /// Provides endpoints for managing quiz sessions within a group quiz including creating a new quiz session,
+    /// retrieving a quiz session by its ID, and retrieving all quiz sessions for a specific group quiz.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class QuizSessionsController(IQuizSessionService quizSessionService, IMapper mapper) : ControllerBase
@@ -16,8 +20,13 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Creates a new quiz session for a group quiz.
-        /// POST: /api/quizsessions
         /// </summary>
+        /// <param name="quizSessionDto">
+        /// A CreateQuizSessionDto object containing the necessary details (such as GroupQuizId and Title) to create a quiz session.
+        /// </param>
+        /// <returns>
+        /// A CreatedAtAction result containing the newly created QuizSessionDto.
+        /// </returns>
         [HttpPost]
         public async Task<IActionResult> CreateQuizSession([FromBody] CreateQuizSessionDto quizSessionDto)
         {
@@ -31,8 +40,11 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Retrieves a quiz session by its ID.
-        /// GET: /api/quizsessions/{quizSessionId}
         /// </summary>
+        /// <param name="quizSessionId">The unique identifier of the quiz session to retrieve.</param>
+        /// <returns>
+        /// An IActionResult containing the QuizSessionDto if found; otherwise, a NotFound result.
+        /// </returns>
         [HttpGet("{quizSessionId:int}")]
         public async Task<IActionResult> GetQuizSessionById(int quizSessionId)
         {
@@ -50,14 +62,17 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Retrieves all quiz sessions for a specific group quiz.
-        /// GET: /api/quizsessions/groupquiz/{groupQuizId}
         /// </summary>
+        /// <param name="groupQuizId">The unique identifier of the group quiz for which to retrieve quiz sessions.</param>
+        /// <returns>
+        /// An IActionResult containing an IEnumerable of QuizSessionDto objects.
+        /// </returns>
         [HttpGet("groupquiz/{groupQuizId:int}")]
         public async Task<IActionResult> GetQuizSessionsForGroupQuiz(int groupQuizId)
         {
             var quizSessions = await _quizSessionService.GetQuizSessionsForGroupQuizAsync(groupQuizId);
             var quizSessionsDto = _mapper.Map<IEnumerable<QuizSessionDto>>(quizSessions);
             return Ok(quizSessionsDto);
-        }   
+        }
     }
 }

@@ -7,6 +7,11 @@ using Movies.Shared.DTO.ModelDTOs;
 
 namespace Movies.Controllers
 {
+    /// <summary>
+    /// Handles comment operations including retrieving all comments (and nested replies)
+    /// for a specific content item, adding new comments or replies, updating comments, and
+    /// soft-deleting comments.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class CommentsController(ICommentService commentService, IMapper mapper) : ControllerBase
@@ -16,8 +21,9 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Retrieve all comments (and nested replies) for a specific content item.
-        /// GET: /api/comments?contentId={contentId}
         /// </summary>
+        /// <param name="contentId">The ID of the content item for which to retrieve comments.</param>
+        /// <returns>An IActionResult containing the list of comments as CommentDto objects.</returns>
         [HttpGet]
         public async Task<IActionResult> GetCommentsForContent([FromQuery] int contentId)
         {
@@ -28,8 +34,9 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Add a new comment (or reply).
-        /// POST: /api/comments
         /// </summary>
+        /// <param name="commentDto">The CreateCommentDto object containing the new comment details.</param>
+        /// <returns>An IActionResult containing the created comment as a CommentDto.</returns>
         [HttpPost]
         public async Task<IActionResult> AddComment([FromBody] CreateCommentDto commentDto)
         {
@@ -44,9 +51,10 @@ namespace Movies.Controllers
         }
 
         /// <summary>
-        /// (Optional) Retrieve a single comment by its ID.
-        /// GET: /api/comments/{commentId}
+        /// Retrieve a single comment by its ID.
         /// </summary>
+        /// <param name="commentId">The unique identifier of the comment to retrieve.</param>
+        /// <returns>An IActionResult containing the CommentDto if found.</returns>
         [HttpGet("{commentId:int}")]
         public async Task<IActionResult> GetCommentById(int commentId)
         {
@@ -65,8 +73,10 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Update a comment.
-        /// PUT: /api/comments/{commentId}
         /// </summary>
+        /// <param name="commentId">The unique identifier of the comment to update.</param>
+        /// <param name="commentDto">An UpdateCommentDto object containing the updated comment details.</param>
+        /// <returns>An IActionResult containing the updated CommentDto on success.</returns>
         [HttpPut("{commentId:int}")]
         public async Task<IActionResult> UpdateComment(int commentId, [FromBody] UpdateCommentDto commentDto)
         {
@@ -90,8 +100,9 @@ namespace Movies.Controllers
 
         /// <summary>
         /// Soft-delete a comment (e.g., set text to "[deleted]").
-        /// DELETE: /api/comments/{commentId}
         /// </summary>
+        /// <param name="commentId">The unique identifier of the comment to soft-delete.</param>
+        /// <returns>An IActionResult with status NoContent if deletion is successful.</returns>
         [HttpDelete("{commentId:int}")]
         public async Task<IActionResult> SoftDeleteComment(int commentId)
         {
@@ -100,7 +111,7 @@ namespace Movies.Controllers
                 await _commentService.SoftDeleteCommentAsync(commentId);
                 return NoContent();
             }
-            catch (KeyNotFoundException ex)
+            catch (EntityNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }
